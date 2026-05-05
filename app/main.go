@@ -24,7 +24,7 @@ func main() {
 		if command == "exit" {
 			break
 		} else if command == "echo" {
-			fmt.Println(command[5:])
+			fmt.Println(command[4:])
 		}
 		fmt.Println(command + ": command not found")
 	}
