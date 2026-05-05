@@ -22,7 +22,6 @@ func main() {
 		}
 		command = strings.TrimSpace(command)
 		if command == "exit" {
-			fmt.Println("Exiting...")
 			break
 		}
 		fmt.Println(command + ": command not found")
