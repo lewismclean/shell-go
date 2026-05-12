@@ -9,7 +9,7 @@ import (
 
 // Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
 var _ = fmt.Print
-pathFiles := []string(os.ReadDir(PATH))
+var pathDirs = []string(strings.Split(os.Getenv("PATH"), ":"))
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
@@ -30,13 +30,14 @@ func main() {
 			if command[5:] == "echo" || command[5:] == "type" || command[5:] == "exit" {
 				fmt.Println(command[5:] + " is a shell builtin")
 			} else {
-				for _, file := range pathFiles {
-					if file.Name() == command[5:] && file.type().IsExec() {
-						println(command[5:] + " is" + file.Path())
-						break
+				for _, dir := range pathDirs {
+					for _, file := range os.ReadDir(dir) {
+						if file.Name() == command[5:] && file.Type().IsExec() {
+							fmt.Println(command[5:] + " is" + file.Path())
+							break
+						}
 					}
 				}
-						
 				fmt.Println(command[5:] + ": not found")
 			}
 		} else {
