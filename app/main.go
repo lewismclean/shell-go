@@ -9,7 +9,7 @@ import (
 
 // Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
 var _ = fmt.Print
-var pathDirs = []string(strings.Split(os.Getenv("PATH"), ":"))
+var pathDirs = []string(strings.Split(os.Getenv("PATH"), string(os.PathListSeparator)))
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
@@ -32,8 +32,12 @@ func main() {
 			} else {
 				for _, dir := range pathDirs {
 					for _, file := range os.ReadDir(dir) {
+						if err != nil {
+							continue
+						}
 						if file.Name() == command[5:] && file.Type().IsExec() {
-							fmt.Println(command[5:] + " is" + file.Path())
+							fullPath := file.Path.Join(dir, file.Name())
+							fmt.Println(command[5:] + " is" + fullPath)
 							break
 						}
 					}
