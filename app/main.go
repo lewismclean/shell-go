@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-// Ensures gofmt doesn't remove the "fmt" import in stage 1 (feel free to remove this!)
-var _ = fmt.Print
 var pathDirs = []string(strings.Split(os.Getenv("PATH"), string(os.PathListSeparator)))
 
 func main() {
