@@ -4,11 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 )
-
-var pathDirs = []string(strings.Split(os.Getenv("PATH"), string(os.PathListSeparator)))
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
@@ -29,32 +26,10 @@ func main() {
 			if command[5:] == "echo" || command[5:] == "type" || command[5:] == "exit" {
 				fmt.Println(command[5:] + " is a shell builtin")
 			} else {
-				cmdName := command[5:]
-				found := false
-				for _, dir := range pathDirs {
-					files, err := os.ReadDir(dir)
-					if err != nil {
-						continue
-					}
-					for _, file := range files {
-						if file.Name() == cmdName {
-							info, err := file.Info()
-							if err != nil {
-								continue
-							}
-							if info.Mode().Perm()&0111 != 0 {
-								fullPath := filepath.Join(dir, cmdName)
-								fmt.Println(cmdName + " is " + fullPath)
-								found = true
-								break
-							}
-						}
-					}
-					if found {
-						break
-					}
-				}
-				if !found {
+				path, found := findInPath(command[5:])
+				if found {
+					fmt.Println(command[5:] + " is " + path)
+				} else {
 					fmt.Println(command[5:] + ": not found")
 				}
 			}
