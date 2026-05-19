@@ -25,7 +25,7 @@ func main() {
 		} else if strings.HasPrefix(command, "type ") {
 			runType(command[5:])
 		} else if strings.HasPrefix(command, "pwd") {
-			println(pwd())
+			pwd()
 		} else {
 			parts := strings.SplitN(command, " ", 10)
 			path, found := findInPath(parts[0])
