@@ -25,7 +25,7 @@ func main() {
 		} else if strings.HasPrefix(command, "type ") {
 			runType(command[5:])
 		} else {
-			parts := strings.SplitN(command, " ", 2)
+			parts := strings.SplitN(command, " ", 0)
 			path, found := findInPath(parts[0])
 			if found {
 				runExecutable(path, parts[1:])
