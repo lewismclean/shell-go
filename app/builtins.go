@@ -10,7 +10,7 @@ func runEcho(arg string) {
 }
 
 func runType(arg string) {
-	if arg == "echo" || arg == "type" || arg == "exit" {
+	if arg == "echo" || arg == "pwd" || arg == "type" || arg == "exit" {
 		fmt.Println(arg + " is a shell builtin")
 	} else {
 		path, found := findInPath(arg)
