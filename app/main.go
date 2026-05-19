@@ -25,7 +25,13 @@ func main() {
 		} else if strings.HasPrefix(command, "type ") {
 			runType(command[5:])
 		} else {
-			fmt.Println(command + ": command not found")
+			parts := strings.SplitN(command, " ", 2)
+			path, found := findInPath(parts[0])
+			if found {
+				runExecutable(path, parts[1:])
+			} else {
+				fmt.Println(command + ": command not found")
+			}
 		}
 	}
 }
