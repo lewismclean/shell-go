@@ -5,8 +5,9 @@ import (
 	"os/exec"
 )
 
-func runExecutable(path string, args []string) {
+func runExecutable(name string, path string, args []string) {
 	cmd := exec.Command(path, args...)
+	cmd.Args := append([]string{name} args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Run()

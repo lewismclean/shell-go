@@ -28,7 +28,7 @@ func main() {
 			parts := strings.SplitN(command, " ", 10)
 			path, found := findInPath(parts[0])
 			if found {
-				runExecutable(path, parts[1:])
+				runExecutable(parts[0], path, parts[1:])
 			} else {
 				fmt.Println(command + ": command not found")
 			}
